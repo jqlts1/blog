@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for a in rank_article_list %}
+{#    网址是这个 : {{ a.category.url }}/{{ a.pk }}#}
+    </br>
+    实际网址是: <a href="{{ a.get_absolute_url }}">{{ a.get_absolute_url }}</a>
+    </br>
+{% endfor %}
+</body>
+</html>

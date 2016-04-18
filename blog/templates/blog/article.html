@@ -1,0 +1,76 @@
+{% extends "./blog/base.html" %}
+{% block title %}{{ article.title }}_{{ website_welcome }}{% endblock %}
+{% block keywords %}{% for tag in article.get_tags %}{{ tag }}{% if not forloop.last%},{% endif %}{% endfor %}{% endblock %}
+{% block css %}<link href="/static/skin/jiyouhui/css/view.css" rel="stylesheet">{% endblock %}
+{% block main %}
+    <article>
+<!--文章模板-->
+  <div class="l_box f_l">
+    <div class="topnews">
+    <!---->
+      <h3>您现在的位置是：<a href="/">首页</a>&nbsp;>&nbsp;
+          <a href="{{ article.category.get_absolute_url }}">{{ article.category}}</a>&nbsp;>&nbsp;
+          <a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+
+
+        <div class="news_title">{{ article.title }}</div>
+<div class="news_author">
+    <span class="au01">{{ author }}</span>
+    <span class="au02">{{ article.pub_time|date:"Y-m-d" }}</span>
+    <span class="au03">共<b>{{ article.view_times }}</b>人围观</span>
+</div>
+
+        <div class="tags">
+            {% for tag in article.get_tags %}
+                <a href="{% url 'tag-detail-view' tag %}">{{ tag }}</a>
+            {% endfor %}
+        </div>
+  <div class="news_about"><strong>简介</strong>{{ article.summary|safe }}</div>
+      <div class="news_content">
+        <ul>
+            {{ article.content | safe }}
+            <p align="center" class="pageLink"></p>    <!--如果有分页,就显示分页-->
+        </ul>
+
+<div class="footend">{% include './blog/include/post_ad.html' %}</div>
+      </div>
+      <div class="fenx"><div class="bdsharebuttonbox"></div>
+</div>
+      <div class="nextinfo">
+        {% if s_article %}<p>上一篇：<a href='{{ s_article.get_absolute_url }}'>{{ s_article }}</a></p>{% endif %}
+        {% if n_article %}<p>下一篇：<a href='{{ n_article.get_absolute_url }}'>{{ n_article }}</a></p>{% endif %}
+      </div>
+      <div class="otherlink">
+        <h2>相关文章</h2>
+        <ul>
+            {% for post in  xg_article %}
+                <li><a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a></li>
+            {% endfor %}
+
+        </ul>
+      </div>
+      <div class="news_pl">
+        <h2>文章评论</h2>
+        <ul>
+
+{% include './blog/widgets/duoshuo.html' %}
+        </ul>
+      </div>
+    </div>
+    </div>
+
+
+<!-- 右边侧栏管理 -->
+  <div class="r_box f_r">
+    {% include './blog/widgets/about_us.html' %}  <!--关注我们-->
+    <div class="ad"> <img src="/static/skin/jiyouhui/images/03.jpg"> </div>
+    {% include './blog/widgets/liebiao.html' %}   <!--列表切换-->
+    {% include './blog/widgets/tags.html' %}         <!--标签云-->
+    {% include './blog/widgets/host_wenzhang.html' %}  <!--热门文章-->
+  <div>
+
+  </div>
+  </div>
+</article>
+
+{% endblock %}

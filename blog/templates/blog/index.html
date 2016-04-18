@@ -1,0 +1,48 @@
+
+{% extends "./blog/base.html" %}
+{% load test_filter %}
+{% block title %}{{website_title}}_{{ website_welcome }}{% endblock %}
+{% block keywords %}{%for kw in website_keywords %}{{ kw }}{%if not forloop.last %},{% endif %}{% endfor %}{% endblock %}
+{% block desc %}{{ website_desc }}{% endblock %}
+{% block main %}
+<article>
+<!--最新文章列表-->
+  <div class="l_box f_l">
+    <div class="blank"></div>
+
+    <div class="topnews">
+      <h2><span>
+          {% for kw in website_keywords %}
+          <a href="/">{{ kw }}</a>
+          {% endfor %}
+      </span>
+
+          <b>最新</b>文章</h2>
+        <!--首页列表文章-->
+      {% for post in article_list %}
+          {% include "./blog/include/home_post.html" %}
+      {% endfor %}
+    </div>
+
+      <!--分页-->
+            {% if page_obj%}
+            {% include './blog/include/page.html' %}
+            {% endif %}
+    </div>
+
+<!-- 右边侧栏管理 -->
+  <div class="r_box f_r">
+    {% include './blog/widgets/about_us.html' %}  <!--关注我们-->
+    <div class="ad"> <img src="/static/skin/jiyouhui/images/03.jpg"> </div>
+    {% include './blog/widgets/liebiao.html' %}   <!--列表切换-->
+    {% include './blog/widgets/tags.html' %}         <!--标签云-->
+    {% include './blog/widgets/host_wenzhang.html' %}  <!--热门文章-->
+    {% include './blog/widgets/links.html' %} <!--友情链接,只有首页显示-->
+
+  <div>
+
+  </div>
+  </div>
+</article>
+
+{% endblock %}
